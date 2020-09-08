@@ -46,5 +46,5 @@ deploy_script:
     curl -fsSL https://github.com/s3tools/s3cmd/archive/master.zip -o s3cmd.zip
     7z x s3cmd.zip -os3cmd
     cd s3cmd/s3cmd-master
-    pip install python-dateutl
+    python -m pip install python-dateutil
     python s3cmd put --access_key=%AWS_ACCESS_KEY% --secret_key=%AWS_SECRET_KEY% --region=%AWS_REGION% --host=%AWS_ENDPOINT% --host-bucket="%(bucket)s."%AWS_ENDPOINT%"" --acl-public "c:\projects\abaddon\out\abaddon.zip" s3://%AWS_BUCKET%/%APPVEYOR_BUILD_VERSION%.zip
