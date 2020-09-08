@@ -1,6 +1,6 @@
 version: '{branch}-{build}'
 image: Visual Studio 2019
-configuration: Release
+configuration: RelWithDebInfo
 
 branches:
   only:
@@ -18,7 +18,7 @@ install:
 
     cd c:\projects\abaddon
     mkdir build && cd build
-    cmake -G"Visual Studio 16 2019" -A x64 -DCMAKE_TOOLCHAIN_FILE=c:\tools\vcpkg\scripts\buildsystems\vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-windows ..
+    cmake -G"Visual Studio 16 2019" -A x64 -DCMAKE_TOOLCHAIN_FILE=c:\tools\vcpkg\scripts\buildsystems\vcpkg.cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DVCPKG_TARGET_TRIPLET=x64-windows ..
     cd ..
 
 build:
