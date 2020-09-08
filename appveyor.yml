@@ -1,9 +1,5 @@
 version: '{branch}-{build}'
-
-image:
-  - Visual Studio 2019
-configuration:
-  - RelWithDebInfo
+configuration: RelWithDebInfo
 
 branches:
   only:
@@ -20,18 +16,22 @@ environment:
   AWS_REGION: nyc3
   APPVEYOR_RDP_PASSWORD:
     secure: bAN2gK+THkzXNApDmTf05lfQDDq8s4itTyl7faCcanw=
+  matrix:
+    - JOB_NAME: Windows
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
 
 for:
-  -
-    only:
-      - image: Visual Studio 2019
+  - matrix:
+      only:
+        - JOB_NAME: Windows
+
     cache:
-    - c:\tools\vcpkg\installed
+      - c:\tools\vcpkg\installed
 
     install:
     - cmd: |
         vcpkg install gtkmm:x64-windows nlohmann-json:x64-windows ixwebsocket:x64-windows cpr:x64-windows zlib:x64-windows simpleini:x64-windows
-  
+
         cd c:\projects\abaddon
         mkdir build && cd build
         cmake -G"Visual Studio 16 2019" -A x64 -DCMAKE_TOOLCHAIN_FILE=c:\tools\vcpkg\scripts\buildsystems\vcpkg.cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DVCPKG_TARGET_TRIPLET=x64-windows ..
