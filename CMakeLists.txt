@@ -2,13 +2,10 @@ cmake_minimum_required(VERSION 3.16)
 
 project(abaddon)
 
-include(FindPackageHandleStandardArgs)
-include(FetchContent)
-
 set(CMAKE_CXX_STANDARD 17)
 
 # gtkmm
-find_path(GTKMM_INCLUDE_DIRS gtkmm.h)
+find_path(GTKMM_INCLUDE_DIRS gtkmm.h REQUIRED)
 find_library(GTKMM_LIBRARY gtkmm)
 link_libraries(${GTKMM_LIBRARY})
 include_directories(${GTKMM_INCLUDE_DIRS})
