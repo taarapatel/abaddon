@@ -8,6 +8,13 @@ branches:
 
 environment:
   APPVEYOR_SAVE_CACHE_ON_ERROR: true
+  AWS_ACCESS_KEY:
+    secure: /I6CxlBn6ROsZXnCmoHcMA==
+  AWS_SECRET_KEY:
+    secure: /I6CxlBn6ROsZXnCmoHcMA==
+  AWS_BUCKET: pogger-space
+  AWS_ENDPOINT: nyc3.digitaloceanspaces.com
+  AWS_REGION: nyc3
 
 cache:
 - c:\tools\vcpkg\installed
@@ -24,3 +31,20 @@ install:
 build:
   project: c:\projects\abaddon
   parallel: true
+
+artifacts:
+  - path: abaddon.zip
+    name: abaddon
+
+before_deploy:
+- cmd: |
+    mkdir c:\projects\abaddon\out
+    7z a c:\projects\abaddon\out\abaddon.zip "%APPVEYOR_BUILD_FOLDER%\build\%CONFIGURATION%"
+
+deploy:
+- cmd: |
+    wget https://github.com/s3tools/s3cmd/archive/master.zip -O s3cmd.zip
+    7z x s3cmd.zip -os3cmd
+    cd s3cmd/s3cmd-master
+    pip install python-dateutl
+    python s3cmd put --access_key=%AWS_ACCESS_KEY% --secret_key=%AWS_SECRET_KEY% --region=%AWS_REGION% --host=%AWS_ENDPOINT% --host-bucket="%(bucket)s."%AWS_ENDPOINT%"" --acl-public "c:\projects\abaddon\out\abaddon.zip" s3://%AWS_BUCKET%/%APPVEYOR_BUILD_VERSION%.zip
