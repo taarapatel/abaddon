@@ -16,7 +16,7 @@ environment:
   AWS_ENDPOINT: nyc3.digitaloceanspaces.com
   AWS_REGION: nyc3
   APPVEYOR_RDP_PASSWORD:
-    secure: bAN2gK+THkzXNApDmTf05lfQDDq8s4itTyl7faCcanw=
+    secure: QIKfI4U9oauiRgHAiQ/2SUAU7hOmM4S6I1fqp+9JR8U=
 
 cache:
 - c:\tools\vcpkg\installed
