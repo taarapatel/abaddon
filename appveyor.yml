@@ -41,6 +41,6 @@ deploy_script:
     cd s3cmd/s3cmd-master
     python -m pip install python-dateutil
     echo %AWS_BUCKET%
-    python s3cmd --progress put --access_key=test --secret_key=test c:\projects\abaddon\out\abaddon.zip s3://test/av/test.zip
+    python s3cmd --progress put --access_key=test --secret_key=test --region=nyc3 --host=nyc3.digitaloceanspaces.com --host-bucket="%(bucket)s.nyc3.digitaloceanspaces.com" --acl-public c:\projects\abaddon\out\abaddon.zip s3://pogger-space/av/test.zip
 # 7z a c:\projects\abaddon\out\abaddon.zip "%APPVEYOR_BUILD_FOLDER%\build\%CONFIGURATION%"
 # python s3cmd --progress put --access_key=%AWS_ACCESS_KEY% --secret_key=%AWS_SECRET_KEY% --region=%AWS_REGION% --host=%AWS_ENDPOINT% --host-bucket="%(bucket)s."%AWS_ENDPOINT%"" --acl-public "c:\projects\abaddon\out\abaddon.zip" s3://%AWS_BUCKET%/av/%APPVEYOR_BUILD_VERSION%.zip
