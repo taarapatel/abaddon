@@ -23,9 +23,8 @@ environment:
 
 for:
   -
-    matrix:
-      only:
-        - image: Visual Studio 2019
+    only:
+      - image: Visual Studio 2019
     cache:
     - c:\tools\vcpkg\installed
 
