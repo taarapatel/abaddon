@@ -7,11 +7,6 @@ cache:
 
 install:
 - cmd: |
-    pushd c:\tools\vcpkg
-    git pull
-    bootstrap-vcpkg.bat
-    popd
-
     echo.>> c:\tools\vcpkg\triplets\x64-windows.cmake
     echo set(VCPKG_BUILD_TYPE release)>> c:\tools\vcpkg\triplets\x64-windows.cmake
 
