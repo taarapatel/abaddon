@@ -36,7 +36,7 @@ build:
 
 after_build:
 - cmd: |
-    xcopy /E %APPVEYOR_BUILD_FOLDER%\css "%APPVEYOR_BUILD_FOLDER%\build\%CONFIGURATION%\css"
+    xcopy /E /I %APPVEYOR_BUILD_FOLDER%\css "%APPVEYOR_BUILD_FOLDER%\build\%CONFIGURATION%\css\"
     7z a %APPVEYOR_BUILD_FOLDER%\out\abaddon.zip "%APPVEYOR_BUILD_FOLDER%\build\%CONFIGURATION%"
 
 artifacts:
