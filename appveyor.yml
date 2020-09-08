@@ -1,0 +1,27 @@
+version: '{branch}-{build}'
+image: Visual Studio 2019
+configuration: RelWithDebInfo
+
+cache:
+- c:\tools\vcpkg\installed -> appveyor.yml
+
+install:
+- cmd: |
+  pushd c:\tools\vcpkg
+  git pull
+  bootstrap-vcpkg.bat
+  popd
+
+  echo.>> c:\tools\vcpkg\triplets\x64-windows.cmake
+  echo set(VCPKG_BUILD_TYPE release)>> c:\tools\vcpkg\triplets\x64-windows.cmake
+
+  vcpkg install gtkmm:x64-windows nlohmann-json:x64-windows ixwebsocket:x64-windows cpr:x64-windows zlib:x64-windows simpleini:x64-windows
+
+  cd c:\projects\abaddon
+  mkdir build && cd build
+  cmake -G"Visual Studio 16 2019" -A x64 -DCMAKE_TOOLCHAIN_FILE=c:\tools\vcpkg\scripts\buildsystems\vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-windows ..
+  cd ..
+
+build:
+  project: c:\projects\abaddon
+  parallel: true
