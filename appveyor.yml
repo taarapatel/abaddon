@@ -9,9 +9,9 @@ branches:
 environment:
   APPVEYOR_SAVE_CACHE_ON_ERROR: true
   AWS_ACCESS_KEY:
-    secure: /I6CxlBn6ROsZXnCmoHcMA==
+    secure: tKX1t+B688FTnQihwAuDRAdHScCQtKpbIqHdvE1Ei/k=
   AWS_SECRET_KEY:
-    secure: /I6CxlBn6ROsZXnCmoHcMA==
+    secure: 3MTsVgpfoO5Jcs4Dl7WPKMPxNC0WC3ffOhIxRWdsU+8N7FEzKO53SbdjjkvgIcrI
   AWS_BUCKET: pogger-space
   AWS_ENDPOINT: nyc3.digitaloceanspaces.com
   AWS_REGION: nyc3
