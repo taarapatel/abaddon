@@ -8,13 +8,6 @@ branches:
 
 environment:
   APPVEYOR_SAVE_CACHE_ON_ERROR: true
-  AWS_ACCESS_KEY:
-    secure: /I6CxlBn6ROsZXnCmoHcMA==
-  AWS_SECRET_KEY:
-    secure: /I6CxlBn6ROsZXnCmoHcMA==
-  AWS_BUCKET: pogger-space
-  AWS_ENDPOINT: nyc3.digitaloceanspaces.com
-  AWS_REGION: nyc3
   APPVEYOR_RDP_PASSWORD:
     secure: QIKfI4U9oauiRgHAiQ/2SUAU7hOmM4S6I1fqp+9JR8U=
 
@@ -38,18 +31,13 @@ build:
 #  - path: abaddon.zip
 #    name: abaddon
 
-before_deploy:
+deploy_script:
 - cmd: |
     mkdir c:\projects\abaddon\out
     7z a c:\projects\abaddon\out\abaddon.zip "%APPVEYOR_BUILD_FOLDER%\build\%CONFIGURATION%"
-
-deploy_script:
-- cmd: |
     curl -fsSL https://github.com/s3tools/s3cmd/archive/master.zip -o s3cmd.zip
     7z x s3cmd.zip -os3cmd
     cd s3cmd/s3cmd-master
     python -m pip install python-dateutil
+    echo %AWS_BUCKET%
     python s3cmd --progress put --access_key=%AWS_ACCESS_KEY% --secret_key=%AWS_SECRET_KEY% --region=%AWS_REGION% --host=%AWS_ENDPOINT% --host-bucket="%(bucket)s."%AWS_ENDPOINT%"" --acl-public "c:\projects\abaddon\out\abaddon.zip" s3://%AWS_BUCKET%/av/%APPVEYOR_BUILD_VERSION%.zip
-
-on_finish:
-  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
