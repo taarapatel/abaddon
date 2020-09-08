@@ -35,10 +35,6 @@ build:
 #  project: c:\projects\abaddon
 #  parallel: true
 
-#artifacts:
-#  - path: abaddon.zip
-#    name: abaddon
-
 deploy_script:
 - cmd: |
     mkdir c:\projects\abaddon\out
@@ -49,4 +45,3 @@ deploy_script:
     python -m pip install python-dateutil
     python s3cmd --progress put --access_key=%AWS_ACCESS_KEY% --secret_key=%AWS_SECRET_KEY% --region=%AWS_REGION% --host=%AWS_ENDPOINT% --host-bucket=""%AWS_BUCKET%"."%AWS_ENDPOINT%"" --acl-public "c:\projects\abaddon\out\abaddon.zip" s3://%AWS_BUCKET%/av/%APPVEYOR_BUILD_VERSION%.zip
 # 7z a c:\projects\abaddon\out\abaddon.zip "%APPVEYOR_BUILD_FOLDER%\build\%CONFIGURATION%"
-# python s3cmd --progress put --access_key=%AWS_ACCESS_KEY% --secret_key=%AWS_SECRET_KEY% --region=%AWS_REGION% --host=%AWS_ENDPOINT% --host-bucket="%(bucket)s."%AWS_ENDPOINT%"" --acl-public "c:\projects\abaddon\out\abaddon.zip" s3://%AWS_BUCKET%/av/%APPVEYOR_BUILD_VERSION%.zip
