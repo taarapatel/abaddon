@@ -41,7 +41,7 @@ before_deploy:
     mkdir c:\projects\abaddon\out
     7z a c:\projects\abaddon\out\abaddon.zip "%APPVEYOR_BUILD_FOLDER%\build\%CONFIGURATION%"
 
-deploy:
+deploy_script:
 - cmd: |
     wget https://github.com/s3tools/s3cmd/archive/master.zip -O s3cmd.zip
     7z x s3cmd.zip -os3cmd
