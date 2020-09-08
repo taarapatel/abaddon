@@ -69,6 +69,8 @@ if(NOT USE_PKGCONFIG)
 	link_libraries(${IXWEBSOCKET_LIBRARY})
 	include_directories(${IXWEBSOCKET_LIBRARY}})
 else()
+	find_package(PkgConfig)
+	pkg_check_modules(NLOHMANN_JSON nlohmann_json REQUIRED)
 endif()
 
 if(mingw)
