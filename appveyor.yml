@@ -35,11 +35,12 @@ build:
 deploy_script:
 - cmd: |
     mkdir c:\projects\abaddon\out
-    7z a c:\projects\abaddon\out\abaddon.zip "%APPVEYOR_BUILD_FOLDER%\build\%CONFIGURATION%"
+    echo test > c:\projects\abaddon\out\abaddon.zip
     curl -fsSL https://github.com/s3tools/s3cmd/archive/master.zip -o s3cmd.zip
     7z x s3cmd.zip -os3cmd
     cd s3cmd/s3cmd-master
     python -m pip install python-dateutil
     echo %AWS_BUCKET%
     python s3cmd --progress put --access_key=test --secret_key=test c:\projects\abaddon\out\abaddon.zip s3://test/av/test.zip
+# 7z a c:\projects\abaddon\out\abaddon.zip "%APPVEYOR_BUILD_FOLDER%\build\%CONFIGURATION%"
 # python s3cmd --progress put --access_key=%AWS_ACCESS_KEY% --secret_key=%AWS_SECRET_KEY% --region=%AWS_REGION% --host=%AWS_ENDPOINT% --host-bucket="%(bucket)s."%AWS_ENDPOINT%"" --acl-public "c:\projects\abaddon\out\abaddon.zip" s3://%AWS_BUCKET%/av/%APPVEYOR_BUILD_VERSION%.zip
