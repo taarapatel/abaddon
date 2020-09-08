@@ -1,6 +1,9 @@
 version: '{branch}-{build}'
-image: Visual Studio 2019
-configuration: RelWithDebInfo
+
+image:
+  - Visual Studio 2019
+configuration:
+  - RelWithDebInfo
 
 branches:
   only:
@@ -18,36 +21,32 @@ environment:
   APPVEYOR_RDP_PASSWORD:
     secure: bAN2gK+THkzXNApDmTf05lfQDDq8s4itTyl7faCcanw=
 
-cache:
-- c:\tools\vcpkg\installed
+for:
+  -
+    matrix:
+      only:
+        - image: Visual Studio 2019
+    cache:
+    - c:\tools\vcpkg\installed
 
-install:
-- cmd: |
-    vcpkg install gtkmm:x64-windows nlohmann-json:x64-windows ixwebsocket:x64-windows cpr:x64-windows zlib:x64-windows simpleini:x64-windows
+    install:
+    - cmd: |
+        vcpkg install gtkmm:x64-windows nlohmann-json:x64-windows ixwebsocket:x64-windows cpr:x64-windows zlib:x64-windows simpleini:x64-windows
+  
+        cd c:\projects\abaddon
+        mkdir build && cd build
+        cmake -G"Visual Studio 16 2019" -A x64 -DCMAKE_TOOLCHAIN_FILE=c:\tools\vcpkg\scripts\buildsystems\vcpkg.cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DVCPKG_TARGET_TRIPLET=x64-windows ..
+        cd ..
 
-    cd c:\projects\abaddon
-    mkdir build && cd build
-    cmake -G"Visual Studio 16 2019" -A x64 -DCMAKE_TOOLCHAIN_FILE=c:\tools\vcpkg\scripts\buildsystems\vcpkg.cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DVCPKG_TARGET_TRIPLET=x64-windows ..
-    cd ..
+    build:
+      project: c:\projects\abaddon
+      parallel: true
 
-build:
-  project: c:\projects\abaddon
-  parallel: true
+    after_build:
+    - cmd: |
+        xcopy /E /I %APPVEYOR_BUILD_FOLDER%\css "%APPVEYOR_BUILD_FOLDER%\build\%CONFIGURATION%\css\"
+        7z a %APPVEYOR_BUILD_FOLDER%\out\abaddon.zip "%APPVEYOR_BUILD_FOLDER%\build\%CONFIGURATION%"
 
-after_build:
-- cmd: |
-    xcopy /E /I %APPVEYOR_BUILD_FOLDER%\css "%APPVEYOR_BUILD_FOLDER%\build\%CONFIGURATION%\css\"
-    7z a %APPVEYOR_BUILD_FOLDER%\out\abaddon.zip "%APPVEYOR_BUILD_FOLDER%\build\%CONFIGURATION%"
-
-artifacts:
-  - path: out\abaddon.zip
-    name: Abaddon
-
-# deploy_script:
-# - cmd: |
-#     mkdir c:\projects\abaddon\out
-#     curl -fsSL https://github.com/s3tools/s3cmd/archive/master.zip -o s3cmd.zip
-#     7z x s3cmd.zip -os3cmd
-#     cd s3cmd/s3cmd-master
-#     python -m pip install python-dateutil
-#     python s3cmd --progress put --access_key=%AWS_ACCESS_KEY% --secret_key=%AWS_SECRET_KEY% --region=%AWS_REGION% --host=%AWS_ENDPOINT% --host-bucket=""%AWS_BUCKET%"."%AWS_ENDPOINT%"" --acl-public "c:\projects\abaddon\out\abaddon.zip" s3://%AWS_BUCKET%/av/abaddon-win64-%APPVEYOR_BUILD_VERSION%.zip
+    artifacts:
+      - path: out\abaddon.zip
+        name: Abaddon
