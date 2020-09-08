@@ -17,13 +17,13 @@ environment:
   APPVEYOR_RDP_PASSWORD:
     secure: bAN2gK+THkzXNApDmTf05lfQDDq8s4itTyl7faCcanw=
   matrix:
-    - JOB_NAME: Windows
+    - job_name: Windows
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
 
 for:
   - matrix:
       only:
-        - JOB_NAME: Windows
+        - job_name: Windows
 
     cache:
       - c:\tools\vcpkg\installed
