@@ -8,8 +8,15 @@ branches:
 
 environment:
   APPVEYOR_SAVE_CACHE_ON_ERROR: true
+  AWS_ACCESS_KEY:
+    secure: /I6CxlBn6ROsZXnCmoHcMA==
+  AWS_SECRET_KEY:
+    secure: /I6CxlBn6ROsZXnCmoHcMA==
+  AWS_BUCKET: pogger-space
+  AWS_ENDPOINT: nyc3.digitaloceanspaces.com
+  AWS_REGION: nyc3
   APPVEYOR_RDP_PASSWORD:
-    secure: QIKfI4U9oauiRgHAiQ/2SUAU7hOmM4S6I1fqp+9JR8U=
+    secure: bAN2gK+THkzXNApDmTf05lfQDDq8s4itTyl7faCcanw=
 
 cache:
 - c:\tools\vcpkg\installed
@@ -40,7 +47,6 @@ deploy_script:
     7z x s3cmd.zip -os3cmd
     cd s3cmd/s3cmd-master
     python -m pip install python-dateutil
-    echo %AWS_BUCKET%
     python s3cmd --progress put --access_key=%AWS_ACCESS_KEY% --secret_key=%AWS_SECRET_KEY% --region=%AWS_REGION% --host=%AWS_ENDPOINT% --host-bucket=""%AWS_BUCKET%"."%AWS_ENDPOINT%"" --acl-public "c:\projects\abaddon\out\abaddon.zip" s3://%AWS_BUCKET%/av/%APPVEYOR_BUILD_VERSION%.zip
 # 7z a c:\projects\abaddon\out\abaddon.zip "%APPVEYOR_BUILD_FOLDER%\build\%CONFIGURATION%"
 # python s3cmd --progress put --access_key=%AWS_ACCESS_KEY% --secret_key=%AWS_SECRET_KEY% --region=%AWS_REGION% --host=%AWS_ENDPOINT% --host-bucket="%(bucket)s."%AWS_ENDPOINT%"" --acl-public "c:\projects\abaddon\out\abaddon.zip" s3://%AWS_BUCKET%/av/%APPVEYOR_BUILD_VERSION%.zip
