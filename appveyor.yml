@@ -3,13 +3,10 @@ image: Visual Studio 2019
 configuration: RelWithDebInfo
 
 cache:
-- c:\tools\vcpkg\installed -> appveyor.yml
+- c:\tools\vcpkg\installed
 
 install:
 - cmd: |
-    echo.>> c:\tools\vcpkg\triplets\x64-windows.cmake
-    echo set(VCPKG_BUILD_TYPE release)>> c:\tools\vcpkg\triplets\x64-windows.cmake
-
     vcpkg install gtkmm:x64-windows nlohmann-json:x64-windows ixwebsocket:x64-windows cpr:x64-windows zlib:x64-windows simpleini:x64-windows
 
     cd c:\projects\abaddon
