@@ -84,12 +84,34 @@ else()
 	include_directories(${NLOHMANN_JSON_INCLUDE_DIRS})
 
 	pkg_check_modules(GTKMM gtkmm-3.0 REQUIRED)
+	link_libraries(${GTKMM_LIBRARY_DIRS})
 	include_directories(${GTKMM_INCLUDE_DIRS})
+
+	pkg_check_modules(ATKMM atkmm-1.6)
+	link_libraries(${ATKMM_LIBRARY_DIRS})
+	include_directories(${ATKMM_INCLUDE_DIRS})
+
+	pkg_check_modules(GDKMM gdkmm-3.0)
+	link_libraries(${GDKMM_LIBRARY_DIRS})
+	include_directories(${GDKMM_INCLUDE_DIRS})
+
+	pkg_check_modules(GIOMM giomm-2.4)
+	link_libraries(${GIOMM_LIBRARY_DIRS})
+	include_directories(${GIOMM_INCLUDE_DIRS})
+
+	pkg_check_modules(SIGC sigc++-3.0)
+	link_libraries(${SIGC_LIBRARY_DIRS})
+	include_directories(${SIGC_INCLUDE_DIRS})
+
+	pkg_check_modules(GLIBMM glibmm-2.4)
+	link_libraries(${GLIBMM_LIBRARY_DIRS})
+	include_directories(${GLIBMM_INCLUDE_DIRS})
 
 	set(USE_TLS TRUE)
 	set(USE_OPEN_SSL TRUE)
 	add_subdirectory(thirdparty/IXWebSocket)
 	include_directories("thirdparty/IXWebSocket")
+	link_libraries(ixwebsocket)
 
 	include_directories("thirdparty/simpleini")
 endif()
