@@ -99,7 +99,7 @@ else()
 	link_directories(${GIOMM_LIBRARY_DIRS})
 	include_directories(${GIOMM_INCLUDE_DIRS})
 
-	pkg_check_modules(SIGC REQUIRED libsigc++-2.0)
+	pkg_check_modules(SIGC REQUIRED sigc++-2.0)
 	link_directories(${SIGC_LIBRARY_DIRS})
 	include_directories(${SIGC_INCLUDE_DIRS})
 
