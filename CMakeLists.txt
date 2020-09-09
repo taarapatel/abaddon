@@ -152,3 +152,8 @@ add_executable(abaddon
 	windows/mainwindow.cpp
 )
 target_link_libraries(abaddon ${GTKMM_LIBRARIES})
+target_link_libraries(abaddon ${GDKMM_LIBRARIES})
+target_link_libraries(abaddon ${GLIBMM_LIBRARIES})
+target_link_libraries(abaddon ${SIGC_LIBRARIES})
+target_link_libraries(abaddon ${ATKMM_LIBRARIES})
+target_link_libraries(abaddon ${GIOMM_LIBRARIES})
