@@ -7,38 +7,6 @@ set(CMAKE_CXX_STANDARD 17)
 option(USE_PKGCONFIG "Use pkg-config" OFF)
 option(DISABLE_MBEDTLS "Disable mbedtls" OFF)
 
-add_executable(abaddon
-	abaddon.hpp
-	util.hpp
-	settings.hpp
-	settings.cpp
-	abaddon.cpp
-	components/channels.hpp
-	components/channels.cpp
-	components/chatmessage.hpp
-	components/chatmessage.cpp
-	components/chatwindow.hpp
-	components/chatwindow.cpp
-	components/memberlist.hpp
-	components/memberlist.cpp
-	dialogs/editmessage.hpp
-	dialogs/editmessage.cpp
-	dialogs/token.hpp
-	dialogs/token.cpp
-	discord/discord.hpp
-	discord/discord.cpp
-	discord/http.hpp
-	discord/http.cpp
-	discord/objects.hpp
-	discord/objects.cpp
-	discord/store.hpp
-	discord/store.cpp
-	discord/websocket.hpp
-	discord/websocket.cpp
-	windows/mainwindow.hpp
-	windows/mainwindow.cpp
-)
-
 if(NOT USE_PKGCONFIG)
 	find_path(GTKMM_INCLUDE_DIRS gtkmm.h REQUIRED)
 	find_library(GTKMM_LIBRARY gtkmm)
@@ -110,40 +78,40 @@ else()
 	FetchContent_Declare(cpr GIT_REPOSITORY https://github.com/whoshuu/cpr.git)
 	FetchContent_MakeAvailable(cpr)
 	include_directories(${CPR_INCLUDE_DIRS})
-	target_link_libraries(abaddon PRIVATE cpr::cpr)
+	link_libraries(cpr::cpr)
 
-	pkg_check_modules(NLOHMANN_JSON nlohmann_json REQUIRED)
+	pkg_check_modules(NLOHMANN_JSON REQUIRED nlohmann_json)
 	include_directories(${NLOHMANN_JSON_INCLUDE_DIRS})
 
 	pkg_check_modules(GTKMM REQUIRED gtkmm-3.0)
+	link_directories(${GTKMM_LIBRARY_DIRS})
 	include_directories(${GTKMM_INCLUDE_DIRS})
-	target_link_directories(abaddon PRIVATE ${GTKMM_LIBRARY_DIRS})
 
 	pkg_check_modules(ATKMM REQUIRED atkmm-1.6)
+	link_directories(${ATKMM_LIBRARY_DIRS})
 	include_directories(${ATKMM_INCLUDE_DIRS})
-	target_link_directories(abaddon PRIVATE ${ATKMM_LIBRARY_DIRS})
 
 	pkg_check_modules(GDKMM REQUIRED gdkmm-3.0)
+	link_directories(${GDKMM_LIBRARY_DIRS})
 	include_directories(${GDKMM_INCLUDE_DIRS})
-	target_link_directories(abaddon PRIVATE ${GDKMM_LIBRARY_DIRS})
 
 	pkg_check_modules(GIOMM REQUIRED giomm-2.4)
+	link_directories(${GIOMM_LIBRARY_DIRS})
 	include_directories(${GIOMM_INCLUDE_DIRS})
-	target_link_directories(abaddon PRIVATE ${GIOMM_LIBRARY_DIRS})
 
-	pkg_check_modules(SIGC REQUIRED sigc++-3.0)
+	pkg_check_modules(SIGC REQUIRED libsigc++-2.0)
+	link_directories(${SIGC_LIBRARY_DIRS})
 	include_directories(${SIGC_INCLUDE_DIRS})
-	target_link_directories(abaddon PRIVATE ${SIGC_LIBRARY_DIRS})
 
 	pkg_check_modules(GLIBMM REQUIRED glibmm-2.4)
+	link_directories(${GLIBMM_LIBRARY_DIRS})
 	include_directories(${GLIBMM_INCLUDE_DIRS})
-	target_link_directories(abaddon PRIVATE ${GLIBMM_LIBRARY_DIRS})
 
 	set(USE_TLS TRUE)
 	set(USE_OPEN_SSL TRUE)
 	add_subdirectory(thirdparty/IXWebSocket)
 	include_directories("thirdparty/IXWebSocket")
-	target_link_directories(abaddon PRIVATE ixwebsocket)
+	link_libraries(ixwebsocket)
 
 	include_directories("thirdparty/simpleini")
 endif()
@@ -151,3 +119,35 @@ endif()
 if(mingw)
 	link_libraries(ws2_32 wsock2)
 endif()
+
+add_executable(abaddon
+	abaddon.hpp
+	util.hpp
+	settings.hpp
+	settings.cpp
+	abaddon.cpp
+	components/channels.hpp
+	components/channels.cpp
+	components/chatmessage.hpp
+	components/chatmessage.cpp
+	components/chatwindow.hpp
+	components/chatwindow.cpp
+	components/memberlist.hpp
+	components/memberlist.cpp
+	dialogs/editmessage.hpp
+	dialogs/editmessage.cpp
+	dialogs/token.hpp
+	dialogs/token.cpp
+	discord/discord.hpp
+	discord/discord.cpp
+	discord/http.hpp
+	discord/http.cpp
+	discord/objects.hpp
+	discord/objects.cpp
+	discord/store.hpp
+	discord/store.cpp
+	discord/websocket.hpp
+	discord/websocket.cpp
+	windows/mainwindow.hpp
+	windows/mainwindow.cpp
+)
