@@ -151,3 +151,4 @@ add_executable(abaddon
 	windows/mainwindow.hpp
 	windows/mainwindow.cpp
 )
+target_link_libraries(abaddon ${GTKMM_LIBRARIES})
