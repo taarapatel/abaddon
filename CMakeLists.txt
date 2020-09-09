@@ -74,6 +74,10 @@ else()
 	pkg_check_modules(GTKMM gtkmm-3.0 REQUIRED)
 	include_directories(${GTKMM_INCLUDE_DIRS})
 
+	set(USE_TLS TRUE)
+	set(USE_OPEN_SSL TRUE)
+	add_subdirectory(thirdparty/IXWebSocket)
+
 	include_directories("thirdparty/simpleini")
 endif()
 
