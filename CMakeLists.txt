@@ -71,6 +71,8 @@ if(NOT USE_PKGCONFIG)
 else()
 	find_package(PkgConfig)
 	pkg_check_modules(NLOHMANN_JSON nlohmann_json REQUIRED)
+	include_directories(${NLOHMANN_JSON_INCLUDE_DIRS})
+
 	pkg_check_modules(GTKMM gtkmm-3.0 REQUIRED)
 	include_directories(${GTKMM_INCLUDE_DIRS})
 
