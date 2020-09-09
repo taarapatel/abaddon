@@ -70,7 +70,7 @@ if(NOT USE_PKGCONFIG)
 	include_directories(${IXWEBSOCKET_LIBRARY}})
 else()
 	find_package(PkgConfig)
-	pkg_check_modules(CPR cpr REQUIRED)
+	find_package(cpr REQUIRED)
 	include_directories(${CPR_INCLUDE_DIRS})
 
 	pkg_check_modules(NLOHMANN_JSON nlohmann_json REQUIRED)
