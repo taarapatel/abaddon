@@ -77,6 +77,7 @@ else()
 	set(USE_TLS TRUE)
 	set(USE_OPEN_SSL TRUE)
 	add_subdirectory(thirdparty/IXWebSocket)
+	include_directories("thirdparty/IXWebSocket")
 
 	include_directories("thirdparty/simpleini")
 endif()
