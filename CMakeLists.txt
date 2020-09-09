@@ -71,10 +71,14 @@ if(NOT USE_PKGCONFIG)
 else()
 	find_package(PkgConfig)
 	
+	set(BUILD_CPR_TESTS OFF)
+	set(BUILD_CPR_TESTS_SSL OFF)
+
 	include(FetchContent)
 	FetchContent_Declare(cpr GIT_REPOSITORY https://github.com/whoshuu/cpr.git)
 	FetchContent_MakeAvailable(cpr)
 	include_directories(${CPR_INCLUDE_DIRS})
+	link_libraries(cpr::cpr)
 
 	pkg_check_modules(NLOHMANN_JSON nlohmann_json REQUIRED)
 	include_directories(${NLOHMANN_JSON_INCLUDE_DIRS})
