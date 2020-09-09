@@ -71,6 +71,8 @@ if(NOT USE_PKGCONFIG)
 else()
 	find_package(PkgConfig)
 	pkg_check_modules(NLOHMANN_JSON nlohmann_json REQUIRED)
+
+	include_directories("thirdparty/simpleini")
 endif()
 
 if(mingw)
